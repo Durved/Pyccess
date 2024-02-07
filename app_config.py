@@ -7,7 +7,7 @@ class AppConfig:
         if config_path:
             self.config_path = config_path
         else:
-            self.config_path = '/app_config.json'
+            self.config_path = 'app_config.json'
 
         self.load_config()
 
@@ -18,6 +18,7 @@ class AppConfig:
     def load_config(self):
         if not os.path.exists(self.config_path):
             self.config = self.default_config()
+            self.save_config()
             return
         with open(self.config_path, 'r') as file:
             self.config = json.load(file)
@@ -33,6 +34,12 @@ class AppConfig:
     
     def add_database_to_list(self, db_name, path):
         self.config['database_list'].append({'name': db_name, 'path': path})
+        print(self.config)
+        self.save_config()
+    
+    def delete_database_from_list(self, index):
+        del self.config['database_list'][index]
+        self.save_config()
 
     def default_config(self):
         config = {}

@@ -3,8 +3,7 @@ import os
 from tkinter import END, SINGLE, Listbox, Tk, messagebox
 from tkinter.ttk import Button, Frame, Label
 import app_config
-import database_config
-import add_database_window
+import database
 
 
 class DatabaseWindow(Tk):
@@ -52,7 +51,7 @@ class DatabaseWindow(Tk):
     def add_database(self):
         # Окно для ввода информации о новой базе данных
         os.mkdir('testes/test1')
-        db = database_config.DatabaseConfig(
+        db = database.Database(
             'testes/test1/test1.pcscfg', 'Тестовая 1', 'testes/test1/test1.db')
         self.app_config.add_database_to_list(
             db.get_db_name(), db.get_dbfile_path())
@@ -68,7 +67,7 @@ class DatabaseWindow(Tk):
             return
         selected_index = selected_index[0]
 
-        database_config.DatabaseConfig(self.app_config.get_database_list()[selected_index]['path']).delete_database()
+        database.Database(self.app_config.get_database_list()[selected_index]['path']).delete_database()
         self.app_config.delete_database_from_list(selected_index)
         self.load_database_list()
 

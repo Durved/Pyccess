@@ -32,9 +32,11 @@ class AppConfig:
     def get_database_list(self):
         return self.config['database_list']
     
+    def get_database_path(self, index):
+        return self.config['database_list'][index]['path']
+    
     def add_database_to_list(self, db_name, path):
         self.config['database_list'].append({'name': db_name, 'path': path})
-        print(self.config)
         self.save_config()
     
     def delete_database_from_list(self, index):
